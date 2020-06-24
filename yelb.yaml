@@ -6,7 +6,7 @@ metadata:
   labels:
     app: redis-server
     tier: cache
-  namespace: yelb-unsecured
+  namespace: yelb
 spec:
   type: ClusterIP
   ports:
@@ -22,7 +22,7 @@ metadata:
   labels:
     app: yelb-db
     tier: backenddb
-  namespace: yelb-unsecured
+  namespace: yelb
 spec:
   type: ClusterIP
   ports:
@@ -38,7 +38,7 @@ metadata:
   labels:
     app: yelb-appserver
     tier: middletier
-  namespace: yelb-unsecured
+  namespace: yelb
 spec:
   type: ClusterIP
   ports:
@@ -54,7 +54,7 @@ metadata:
   labels:
     app: yelb-ui
     tier: frontend
-  namespace: yelb-unsecured
+  namespace: yelb
 spec:
   type: LoadBalancer
   ports:
@@ -69,7 +69,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: yelb-ui-1ns
-  namespace: yelb-unsecured
+  namespace: yelb
 spec:
   replicas: 3
   selector:
@@ -91,7 +91,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis-server-1ns
-  namespace: yelb-unsecured
+  namespace: yelb
 spec:
   replicas: 1
   selector:
@@ -113,7 +113,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: yelb-db-1ns
-  namespace: yelb-unsecured
+  namespace: yelb
 spec:
   replicas: 1
   selector:
@@ -135,7 +135,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: yelb-appserver-1ns
-  namespace: yelb-unsecured
+  namespace: yelb
 spec:
   replicas: 1
   selector:
