@@ -118,7 +118,7 @@ spec:
     spec:
       containers:
       - name: yelb-db
-        image: mreferre/yelb-db:0.3
+        image: melamin/yelb-db:0.3
         ports:
         - containerPort: 5432
 ---
