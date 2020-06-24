@@ -7,11 +7,10 @@ Tested on OCP 4.4
 ## Deployment steps
 
 ```
-$ git clone https://github.com/mohanadelamin/yelb-os.git
-$ cd yelb-os
-$ oc new-project yelb
-$ oc apply -f yelb.yaml
-$ oc expose svc yelb-ui -n yelb
+$ git clone https://github.com/mohanadelamin/yelb.git
+$ cd yelb/
+$ kubectl create namespace yelb
+$ kubectl apply -f yelb.yaml
 ```
 
 App UI:

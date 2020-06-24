@@ -1,4 +1,4 @@
-# Minor modification from http://www.it20.info/2017/07/yelb-yet-another-sample-app/ to demo VMware PKS with K8S Load Balancer
+# Minor modification from http://www.it20.info/2017/07/yelb-yet-another-sample-app/ to demo CN-FW Palo Alto Networks
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,7 +6,7 @@ metadata:
   labels:
     app: redis-server
     tier: cache
-  namespace: yelb
+  namespace: yelb-unsecured
 spec:
   type: ClusterIP
   ports:
@@ -22,7 +22,7 @@ metadata:
   labels:
     app: yelb-db
     tier: backenddb
-  namespace: yelb
+  namespace: yelb-unsecured
 spec:
   type: ClusterIP
   ports:
@@ -38,7 +38,7 @@ metadata:
   labels:
     app: yelb-appserver
     tier: middletier
-  namespace: yelb
+  namespace: yelb-unsecured
 spec:
   type: ClusterIP
   ports:
@@ -54,7 +54,7 @@ metadata:
   labels:
     app: yelb-ui
     tier: frontend
-  namespace: yelb
+  namespace: yelb-unsecured
 spec:
   type: LoadBalancer
   ports:
@@ -65,13 +65,16 @@ spec:
     app: yelb-ui
     tier: frontend
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: yelb-ui
-  namespace: yelb
+  name: yelb-ui-1ns
+  namespace: yelb-unsecured
 spec:
   replicas: 3
+  selector:
+   matchLabels:
+    app: yelb-ui
   template:
     metadata:
       labels:
@@ -79,18 +82,21 @@ spec:
         tier: frontend
     spec:
       containers:
-      - name: yelb-ui
-        image: melamin/yelb-ui:v1.17
+      - name: yelb-ui-1ns
+        image: melamin/yelb-ui:v1.19
         ports:
         - containerPort: 80
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-server
-  namespace: yelb
+  name: redis-server-1ns
+  namespace: yelb-unsecured
 spec:
   replicas: 1
+  selector:
+   matchLabels:
+    app: redis-server
   template:
     metadata:
       labels:
@@ -98,18 +104,21 @@ spec:
         tier: cache
     spec:
       containers:
-      - name: redis-server
+      - name: redis-server-1ns
         image: redis:4.0.2
         ports:
         - containerPort: 6379
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: yelb-db
-  namespace: yelb
+  name: yelb-db-1ns
+  namespace: yelb-unsecured
 spec:
   replicas: 1
+  selector:
+   matchLabels:
+    app: yelb-db
   template:
     metadata:
       labels:
@@ -117,18 +126,21 @@ spec:
         tier: backenddb
     spec:
       containers:
-      - name: yelb-db
+      - name: yelb-db-1ns
         image: melamin/yelb-db:0.3
         ports:
         - containerPort: 5432
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: yelb-appserver
-  namespace: yelb
+  name: yelb-appserver-1ns
+  namespace: yelb-unsecured
 spec:
   replicas: 1
+  selector:
+   matchLabels:
+    app: yelb-appserver
   template:
     metadata:
       labels:
@@ -136,7 +148,7 @@ spec:
         tier: middletier
     spec:
       containers:
-      - name: yelb-appserver
+      - name: yelb-appserver-1ns
         image: melamin/yelb-appserver:v1.21
         ports:
         - containerPort: 4567
