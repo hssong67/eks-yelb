@@ -14,4 +14,4 @@ $ kubectl apply -f yelb.yaml
 ```
 
 App UI:
-![UI](https://raw.githubusercontent.com/mohanadelamin/yelb/master/yelb.png)
+![UI](https://raw.githubusercontent.com/mohanadelamin/yelb/master/yelb-ui.png)
