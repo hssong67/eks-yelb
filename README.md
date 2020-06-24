@@ -2,7 +2,7 @@ This is customized version of mreferre [Yelb app](https://github.com/mreferre/ye
 
 The customization is showing the UI POD IP address and name.
 
-Tested on OCP 4.4
+Tested on K8S v1.17.4 and GKE 1.14.10
 
 ## Deployment steps
 
